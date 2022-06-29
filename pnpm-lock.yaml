@@ -5,11 +5,13 @@ specifiers:
   eslint-config-next: 12.2.0
   next: 12.2.0
   react: 18.2.0
+  react-countdown-hook: ^1.1.1
   react-dom: 18.2.0
 
 dependencies:
   next: 12.2.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
+  react-countdown-hook: 1.1.1_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
 
 devDependencies:
@@ -1507,6 +1509,14 @@ packages:
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
+
+  /react-countdown-hook/1.1.1_react@18.2.0:
+    resolution: {integrity: sha512-+/vH6zK2H0yM9dPWJOa3hnLsBWWjwwi/6KOXDBc6F65lrc8vmuMozjTOlLhG4AtyyOTJAd2bvJhlph8IPqrXxg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}

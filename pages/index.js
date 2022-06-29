@@ -1,10 +1,24 @@
+import React from "react";
 import Head from "next/head";
 import Image from "next/image";
+import useCountDown from "react-countdown-hook";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
+const interval = 1000;
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+}
+
 export default function Home() {
   const [session, setSession] = useState(false);
+  const [initialTime, setInitialTime] = useState(2 * 60 * 1000);
+  const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, interval);
+
+  const restart = React.useCallback((newTime) => start(newTime), []);
 
   return (
     <div className={styles.container}>
@@ -18,17 +32,35 @@ export default function Home() {
         {!session ? (
           <div>
             <div>
-              <button>2 minutes</button>
-              <button>3 minutes</button>
-              <button>5 minutes</button>
+              <button onClick={() => setInitialTime(2 * 60 * 1000)}>2 minutes</button>
+              <button onClick={() => setInitialTime(3 * 60 * 1000)}>3 minutes</button>
+              <button onClick={() => setInitialTime(5 * 60 * 1000)}>5 minutes</button>
             </div>
-            <button onClick={() => setSession(true)}>Start Session</button>
+            <button
+              onClick={() => {
+                setSession(true);
+                start();
+              }}
+            >
+              Start Session
+            </button>
           </div>
         ) : (
           // Let the timer run
           // When the timer is up, set the session to false
+          <div>
+            <p>Time left: {formatTime(timeLeft / 1000)}</p>
 
-          <div>Timer Occur Here</div>
+            <button onClick={() => restart(initialTime)}>Restart</button>
+
+            <button
+              onClick={() => {
+                setSession(false);
+              }}
+            >
+              End Session
+            </button>
+          </div>
         )}
       </main>
 

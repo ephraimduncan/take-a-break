@@ -15,10 +15,25 @@ function formatTime(seconds) {
 
 export default function Home() {
   const [session, setSession] = useState(false);
+  const [mouseMoved, setMouseMoved] = useState(false);
   const [initialTime, setInitialTime] = useState(2 * 60 * 1000);
   const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, interval);
 
   const restart = React.useCallback((newTime) => start(newTime), []);
+  const isTimerActive = timeLeft > 0;
+
+  const handleMouseMove = React.useCallback(() => {
+    let timer;
+
+    restart(initialTime);
+    setMouseMoved(true);
+
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      setMouseMoved(false);
+    }, 1000);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -28,38 +43,43 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={styles.main} onMouseMove={handleMouseMove}>
         {!session ? (
           <div>
             <div>
-              <button onClick={() => setInitialTime(2 * 60 * 1000)}>2 minutes</button>
+              <button onClick={() => setInitialTime(5 * 1000)}>2 minutes</button>
               <button onClick={() => setInitialTime(3 * 60 * 1000)}>3 minutes</button>
               <button onClick={() => setInitialTime(5 * 60 * 1000)}>5 minutes</button>
             </div>
             <button
               onClick={() => {
                 setSession(true);
-                start();
+                start(initialTime);
               }}
             >
               Start Session
             </button>
           </div>
         ) : (
-          // Let the timer run
-          // When the timer is up, set the session to false
           <div>
-            <p>Time left: {formatTime(timeLeft / 1000)}</p>
-
-            <button onClick={() => restart(initialTime)}>Restart</button>
-
-            <button
-              onClick={() => {
-                setSession(false);
-              }}
-            >
-              End Session
-            </button>
+            {isTimerActive ? (
+              <div>
+                <p>{formatTime(timeLeft / 1000)}</p>
+                {mouseMoved && <p>Oops! Try Again</p>}
+              </div>
+            ) : (
+              <div>
+                <div>Timer is Done</div>
+                <button onClick={() => restart(initialTime)}>Restart</button>
+                <button
+                  onClick={() => {
+                    setSession(false);
+                  }}
+                >
+                  Take another break?
+                </button>
+              </div>
+            )}
           </div>
         )}
       </main>

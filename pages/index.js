@@ -3,12 +3,13 @@ import Head from "next/head";
 import useCountDown from "react-countdown-hook";
 import styles from "../styles/Home.module.css";
 import { formatTime } from "../lib/util";
+import Image from "next/image";
 
 export default function Home() {
   const [tabHasFocus, setTabHasFocus] = React.useState(true);
   const [session, setSession] = React.useState("inactive");
-  const [mouseMoved, setMouseMoved] = React.useState(false);
-  const [initialTime, setInitialTime] = React.useState(2 * 60 * 1000);
+  const [mouseMoved, setMouseMoved] = React.useState(false); // set to false
+  const [initialTime, setInitialTime] = React.useState(5 * 1000);
   const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, 1000);
 
   const restart = React.useCallback((newTime) => start(newTime), []);
@@ -33,14 +34,18 @@ export default function Home() {
   React.useEffect(() => {
     const handleFocus = () => {
       console.log("Tab has focus");
-      setTabHasFocus(true);
+
+      if (timerIsActive) {
+        setTabHasFocus(true);
+      }
     };
 
     const handleBlur = () => {
       console.log("Tab lost focus");
-      restart(initialTime);
-      pause();
-      setTabHasFocus(false);
+      if (timerIsActive) {
+        restart(initialTime);
+        setTabHasFocus(false);
+      }
     };
 
     window.addEventListener("focus", handleFocus);
@@ -50,7 +55,7 @@ export default function Home() {
       window.removeEventListener("focus", handleFocus);
       window.removeEventListener("blur", handleBlur);
     };
-  }, []);
+  }, [timerIsActive]);
 
   return (
     <div className={styles.container} onMouseMove={handleMouseMove}>
@@ -60,15 +65,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         {session === "inactive" && (
           <>
-            <div>
-              <button onClick={() => setInitialTime(2 * 60 * 1000)}>2 minutes</button>
+            <Image src="/mug.svg" width={100} height={100} />
+            <h2>Take a break from all the noise and appreciate the beauty of silence</h2>
+            <div className="btn-group">
+              <button onClick={() => setInitialTime(5 * 1000)}>2 minutes</button>
               <button onClick={() => setInitialTime(3 * 60 * 1000)}>3 minutes</button>
               <button onClick={() => setInitialTime(5 * 60 * 1000)}>5 minutes</button>
             </div>
             <button
+              className="main-btn"
               onClick={() => {
                 setSession("active");
                 start(initialTime);
@@ -83,14 +91,23 @@ export default function Home() {
           <>
             {timerIsActive ? (
               <div>
-                <p>{formatTime(timeLeft / 1000)}</p>
-                {(mouseMoved || !tabHasFocus) && <p>Oops! Try Again</p>}
+                <h1>{formatTime(timeLeft / 1000)}</h1>
+                <div className="timer_detail">
+                  <p onClick={pause}>Don’t move your cursor. Just sit back, relax & breathe.</p>
+
+                  {(mouseMoved || !tabHasFocus) && <p className="oops">Oops! Try Again</p>}
+                </div>
               </div>
             ) : (
               <div>
-                <div>You've done a good job today.</div>
+                <h2 className="h2-main">You did it!</h2>
+                <h2>You've done a good job today.</h2>
+                <h2>Remember, it’s okay to take a break.</h2>
                 <button
+                  className="main-btn done-btn"
                   onClick={() => {
+                    console.log(timeLeft);
+                    console.log(timerIsActive);
                     setSession("inactive");
                   }}
                 >

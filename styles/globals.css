@@ -1,16 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter');
+
+*,
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
   box-sizing: border-box;
+  font-family: Inter, SF Pro Display, -apple-system, sans-serif
+}
+
+main {
+  height: 100vh;
+  background-color: #f2e8e4;
+  color: #2E2E30;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+button {
+  background: none;
+  border: 1px solid #2E2E30;
+  padding: 4px 8px;
+  padding: 0.5em 0.75em;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 1em;
+  margin: 0 1em;
+  cursor: pointer;
+  color: #010202;
+}
+
+.btn-group {
+  margin: 1em;
+}
+
+.main-btn {
+  font-weight: 500;
+  line-height: normal;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.done-btn {
+  margin-top: 00.5em;
+}
+
+h1 {
+  font-size: 4em;
+  font-weight: 600;
+  position: absolute;
+  left: 45%;
+  top: 40%;
+}
+
+h2 {
+  font-weight: 300;
+  line-height: normal;
+  font-size: 1.125em;
+  margin: 0.5em 0;
+}
+
+.oops {
+  color: #d10007c2;
+  font-weight: 500;
+  animation: fadeIn 0.5s;
+}
+
+.timer_detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 35%;
+  top: 52%;
+}
+
+.timer_detail p {
+  font-size: 1em;
+  font-weight: 300;
+  line-height: normal;
+  margin: 0.5em 0;
+}
+
+.h2-main {
+  font-size: 2rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

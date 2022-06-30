@@ -33,6 +33,12 @@ button {
   color: #010202;
 }
 
+
+.btn-inactive {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.25);
+}
+
 .btn-group {
   margin: 1em;
 }
@@ -42,10 +48,15 @@ button {
   line-height: normal;
   font-size: 18px;
   letter-spacing: 0.5px;
+  transition: 0.2s;
+}
+
+.main-btn:hover {
+  background-color: hsl(17, 29.0%, 83.0%);
 }
 
 .done-btn {
-  margin-top: 00.5em;
+  margin-top: 0.5em;
 }
 
 h1 {

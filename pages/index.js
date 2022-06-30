@@ -9,11 +9,10 @@ export default function Home() {
   const [session, setSession] = React.useState("inactive");
   const [mouseMoved, setMouseMoved] = React.useState(false);
   const [tabHasFocus, setTabHasFocus] = React.useState(true);
-  const [buttonClicked, setButtonClicked] = React.useState(false);
   const [initialTime, setInitialTime] = React.useState(2 * 60 * 1000);
   const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, 1000);
 
-  const restart = React.useCallback((newTime) => start(newTime), []);
+  const restart = React.useCallback((newTime) => start(newTime), [start]);
   const timerIsActive = timeLeft > 0;
 
   const handleMouseMove = () => {
@@ -56,7 +55,7 @@ export default function Home() {
       window.removeEventListener("focus", handleFocus);
       window.removeEventListener("blur", handleBlur);
     };
-  }, [timerIsActive]);
+  }, [timerIsActive, initialTime, restart]);
 
   return (
     <div className={styles.container} onMouseMove={handleMouseMove}>
@@ -69,7 +68,7 @@ export default function Home() {
       <main>
         {session === "inactive" && (
           <>
-            <Image src="/mug.svg" width={100} height={100} />
+            <Image alt="Mug" src="/mug.svg" width={100} height={100} />
             <h2>Take a break from all the noise and appreciate the beauty of silence</h2>
             <div className="btn-group">
               <button
@@ -109,7 +108,7 @@ export default function Home() {
               <div>
                 <h1>{formatTime(timeLeft / 1000)}</h1>
                 <div className="timer_detail">
-                  <p onClick={pause}>Don’t move your cursor. Just sit back, relax & breathe.</p>
+                  <p onClick={pause}>Don{"’"}t move your cursor. Just sit back, relax & breathe.</p>
 
                   {(mouseMoved || !tabHasFocus) && <p className="oops">Oops! Try Again</p>}
                 </div>
@@ -117,8 +116,8 @@ export default function Home() {
             ) : (
               <div>
                 <h2 className="h2-main">You did it!</h2>
-                <h2>You've done a good job today.</h2>
-                <h2>Remember, it’s okay to take a break.</h2>
+                <h2>You{"’"}ve done a good job today.</h2>
+                <h2>Remember, it{"’"}s okay to take a break.</h2>
                 <button
                   className="main-btn done-btn"
                   onClick={() => {
@@ -134,7 +133,7 @@ export default function Home() {
           </>
         )}
         <footer>
-          <a href="https://www.github.com/dephraiim/take-a-break" target="_blank">
+          <a href="https://www.github.com/dephraiim/take-a-break" target="_blank" rel="noreferrer">
             github.com/break
           </a>
         </footer>

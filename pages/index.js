@@ -63,7 +63,7 @@ export default function Home() {
       <Head>
         <title>Take a Break</title>
         <meta name="description" content="Take A Break from your daily routine." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/mug.svg" />
       </Head>
 
       <main>

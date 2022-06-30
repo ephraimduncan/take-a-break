@@ -133,6 +133,11 @@ export default function Home() {
             )}
           </>
         )}
+        <footer>
+          <a href="https://www.github.com/dephraiim/take-a-break" target="_blank">
+            github.com/break
+          </a>
+        </footer>
       </main>
     </div>
   );
